@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StoryLensLab — Decision Intelligence & KPI Network</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Persistent Sidebar with InterneersLab Theme -->
+  <aside class="sidebar">
+    <div>
+      <div class="sidebar-header">
+        <div class="category-tag">EXCLUSIVE INVENTORY NETWORK</div>
+        <div class="brand-title">
+          StoryLens<span class="hollow">Lab</span>
+        </div>
+        <div class="brand-subtitle">Manage your assets with ease. Secure, fast, and beautifully designed.</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">KPI Network Engine</div>
+        <a class="nav-link active" data-view="v_overview">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg>
+          Overview
+        </a>
+        <a class="nav-link" data-view="v_investigation">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          Investigation
+        </a>
+        <a class="nav-link" data-view="v_drivers">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Driver Analysis
+        </a>
+        <a class="nav-link" data-view="v_analytics">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 20h20M5 20V10l7-7 7 7v10"/><path d="M9 20v-5h6v5"/></svg>
+          Analytics Lab
+        </a>
+        <a class="nav-link" data-view="v_decisions">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          Decision Lab
+        </a>
+
+        <div class="nav-section-label" style="margin-top: 1rem;">Trust & Security</div>
+        <a class="nav-link" data-view="v_evidence">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          Evidence Ledger
+        </a>
+        <a class="nav-link" data-view="v_governance">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          Governance & Audit
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <div style="font-weight: 700; color: var(--text-main);">Accenture Innovation Challenge</div>
+      <div style="margin-top: 0.2rem; color: var(--text-muted);">Team Dunhill (IIT Kanpur)</div>
+    </div>
+  </aside>
+
+  <!-- Main Wrapper -->
+  <div class="main-wrapper">
+
+    <!-- Top Header Navigation -->
+    <header class="top-header">
+      <div class="header-left">
+        <span class="provenance-chip">INV-2026-0829-017</span>
+        <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">Data Health: <strong style="color: #047857;">SAP 7m</strong> · <strong style="color: #047857;">WMS 53m</strong> · <strong style="color: #047857;">Zendesk 2m</strong></span>
+      </div>
+
+      <div class="header-right">
+        <button class="btn-primary" onclick="openBriefModal()" style="padding: 0.45rem 1rem; font-size: 0.8rem;">
+          📄 Executive Decision Brief
+        </button>
+        <div class="persona-select-group">
+          <span>Viewing as:</span>
+          <select id="personaDropdown" class="persona-dropdown">
+            <option value="executive">Executive C-Suite</option>
+            <option value="operations">Operations Lead</option>
+            <option value="analyst">BI Auditor / Analyst</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+
+      <!-- View 1: Overview (Business Incident First) -->
+      <section class="view-panel active-panel" id="v_overview">
+
+        <!-- Data Incident Warning Alert -->
+        <div id="dataIncidentAlert" class="warning-banner" style="display: none; background: #fef2f2; border-color: #ef4444; color: #991b1b;">
+          ⚠️ <strong>INVESTIGATION PAUSED: Data Pipeline Anomaly Suspected.</strong> SAP Sales ingestion volume dropped 19.4% at 03:00 UTC. KPI drop may be a data ingestion fault rather than a business incident.
+        </div>
+
+        <!-- Incident Banner -->
+        <div class="incident-hero">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <div style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px;">Active Business Incident</div>
+              <div class="incident-headline" id="incidentHeadline">Net Revenue is ₹8.1M below expected performance (-8.1%)</div>
+            </div>
+            <span class="status-tag verified" id="incidentStatusTag">✓ Verified Driver</span>
+          </div>
+
+          <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-muted);" id="incidentPrimaryDriver">
+            Primary driver: <strong style="color: var(--text-main);">Supplier A fulfillment deterioration</strong> (explained impact: ₹7.2M)
+          </div>
+          <div style="display: flex; gap: 0.85rem; margin-top: 0.5rem;">
+            <button class="btn-primary" onclick="navigateTo('v_investigation')">
+              Review Evidence & Pipeline &rarr;
+            </button>
+            <button class="btn-secondary" onclick="navigateTo('v_drivers')">
+              Explore Drivers
+            </button>
+            <button class="btn-secondary" onclick="navigateTo('v_decisions')">
+              Simulate Response
+            </button>
+            <button class="btn-secondary" onclick="openBriefModal()">
+              Generate CEO Decision Brief
+            </button>
+          </div>
+        </div>
+
+        <!-- Decision Memory RAG Match Banner -->
+        <div class="card" style="border-left: 4px solid var(--accent-purple); background: #faf5ff;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 0.85rem; font-weight: 800; color: var(--accent-purple);">🧠 Decision Memory (RAG over Organizational Decisions)</div>
+            <span class="status-tag verified" style="background: #f3e8ff; color: var(--accent-purple);">91% Historical Match</span>
+          </div>
+          <div style="font-size: 0.9rem; color: var(--text-main); font-weight: 600; margin-top: 0.3rem;">
+            Similar Incident Found: <strong>INV-2026-0312-004 (March 2026)</strong> — Supplier A fill rate dropped 16.5%. Reallocated 20% volume to Supplier B, recovering ₹2.72M in 9 days.
+          </div>
+        </div>
+
+        <!-- InterneersLab Top 4 Metric Cards -->
+        <div class="grid-4">
+          <!-- Card 1: Revenue Gap -->
+          <div class="card">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div class="icon-box blue">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+              </div>
+              <span class="status-tag warning">Critical</span>
+            </div>
+            <div>
+              <div style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Net Revenue Gap</div>
+              <div style="font-size: 1.8rem; font-family: var(--font-heading); font-weight: 900; color: var(--text-main); margin-top: 0.2rem;">₹8.1M</div>
+              <div style="font-size: 0.75rem; color: var(--accent-rose); font-weight: 700; margin-top: 0.2rem;">-8.1% vs expected (₹100M)</div>
+            </div>
+          </div>
+
+          <!-- Card 2: Evidence Confidence -->
+          <div class="card">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div class="icon-box green">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <span class="status-tag verified">Verified</span>
+            </div>
+            <div>
+              <div style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Evidence Confidence</div>
+              <div style="font-size: 1.8rem; font-family: var(--font-heading); font-weight: 900; color: var(--text-main); margin-top: 0.2rem;" id="confScore">84%</div>
+              <div style="font-size: 0.75rem; color: #047857; font-weight: 700; margin-top: 0.2rem;">High (4 Reconciled Sources)</div>
+            </div>
+          </div>
+
+          <!-- Card 3: Decision Robustness -->
+          <div class="card">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div class="icon-box purple">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+              <span class="status-tag verified">500 Trials</span>
+            </div>
+            <div>
+              <div style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Decision Robustness</div>
+              <div style="font-size: 1.8rem; font-family: var(--font-heading); font-weight: 900; color: var(--text-main); margin-top: 0.2rem;">87%</div>
+              <div style="font-size: 0.75rem; color: var(--accent-purple); font-weight: 700; margin-top: 0.2rem;">Monte-Carlo Validated</div>
+            </div>
+          </div>
+
+          <!-- Card 4: Materiality Score -->
+          <div class="card">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div class="icon-box rose">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              </div>
+              <span class="status-tag warning">M Gate</span>
+            </div>
+            <div>
+              <div style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Materiality Score</div>
+              <div style="font-size: 1.8rem; font-family: var(--font-heading); font-weight: 900; color: var(--text-main); margin-top: 0.2rem;" id="matScore">0.91</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.2rem;">Critical (M = 0.4S + 0.4B + 0.2P)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Demonstration Scenario Picker -->
+        <div class="card">
+          <div class="card-title">Demonstration Scenario Picker</div>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button class="btn-primary scenario-tab" data-scenario="supply_chain">1. Supply Chain Disruption (Main Case)</button>
+            <button class="btn-secondary scenario-tab" data-scenario="abstain_scenario">2. Low-Confidence Abstention</button>
+            <button class="btn-secondary scenario-tab" data-scenario="data_pipeline_fault">3. Data Pipeline Anomaly (Pause Ingestion)</button>
+            <button class="btn-secondary scenario-tab" data-scenario="sparse_history">4. Sparse History Launch</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- View 2: Investigation Pipeline & Falsification -->
+      <section class="view-panel" id="v_investigation">
+        <div class="card">
+          <div class="card-title">Deterministic Investigation State Machine Pipeline</div>
+          
+          <div style="display: flex; flex-direction: column; gap: 0.85rem;" id="pipelineGraph">
+            <div style="background: var(--bg-subtle); padding: 0.9rem 1.1rem; border-radius: var(--radius-md); border-left: 4px solid var(--accent-purple); font-weight: 600;">
+              <strong>Stage 1 • KPI Signal Detected:</strong> Net Revenue −8.1% (Robust z-score -3.4, MAD Residual -₹8.1M).
+            </div>
+            <div style="background: var(--bg-subtle); padding: 0.9rem 1.1rem; border-radius: var(--radius-md); border-left: 4px solid var(--accent-blue); font-weight: 600;">
+              <strong>Stage 2 • Multi-Source Data Reconciliation:</strong> 3 sources reconciled (SAP Sales 7m fresh, WMS Logistics 53m fresh, Zendesk 2m fresh). 99.1% usable data.
+            </div>
+            <div style="background: var(--bg-subtle); padding: 0.9rem 1.1rem; border-radius: var(--radius-md); border-left: 4px solid var(--accent-blue); font-weight: 600;">
+              <strong>Stage 3 • Driver Decomposition:</strong> Price-Volume-Mix gap split into Cancellations (30%), Volume (27%), Repeat (22%), Mix (14%).
+            </div>
+            <div style="background: var(--bg-subtle); padding: 0.9rem 1.1rem; border-radius: var(--radius-md); border-left: 4px solid var(--accent-purple); font-weight: 600;">
+              <strong>Stage 4 • Causal Difference-in-Differences Test:</strong> Supplier A SKUs show -6.0 pp causal drop vs control SKUs (p < 0.01).
+            </div>
+            <div style="background: var(--bg-subtle); padding: 0.9rem 1.1rem; border-radius: var(--radius-md); border-left: 4px solid #047857; font-weight: 600;">
+              <strong>Stage 5 • Evidence Confidence Engine:</strong> 84.1% Confidence Score (Formula: C = 0.25E + 0.20A + 0.20Q + 0.15F + 0.20K - X).
+            </div>
+          </div>
+        </div>
+
+        <!-- Hypothesis Falsification Panel -->
+        <div class="card" style="border-left: 4px solid var(--accent-amber);">
+          <div class="card-title">🔍 Hypothesis Falsification — "What would change my mind?"</div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Identifies external or internal evidence conditions that could materially overturn the Supplier A conclusion:</p>
+          
+          <table class="console-table">
+            <thead>
+              <tr>
+                <th>Falsification Condition</th>
+                <th>Confidence Impact</th>
+                <th>Projected Score</th>
+                <th>Falsification Risk</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Competitor pricing decline > 12%</td><td class="mono" style="color: var(--accent-rose);">-18.0 pp</td><td class="mono">66.1%</td><td><span class="status-tag warning">High</span></td></tr>
+              <tr><td>Demand decline across unaffected SKUs > 8%</td><td class="mono" style="color: var(--accent-rose);">-14.0 pp</td><td class="mono">70.1%</td><td><span>Medium</span></td></tr>
+              <tr><td>Supplier B/C products showing equivalent retention drop</td><td class="mono" style="color: var(--accent-rose);">-21.0 pp</td><td class="mono">63.1%</td><td><span class="status-tag warning">High</span></td></tr>
+            </tbody>
+          </table>
+
+          <div style="background: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md); font-size: 0.85rem; margin-top: 0.5rem;">
+            <strong>Investigation Next-Best-Evidence:</strong> <strong style="color: var(--accent-blue);">Competitor Pricing Feed</strong> (Expected Info Gain: <strong>VERY HIGH</strong> — Best separates Supplier Disruption from Market Pricing Pressure).
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Evaluated Candidate Hypotheses</div>
+          <table class="console-table">
+            <thead>
+              <tr>
+                <th>Hypothesis</th>
+                <th>Evidence Support</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Supplier A Fulfilment Deterioration</td><td class="mono">84.1% Confidence</td><td><span class="status-tag verified">Leading Driver</span></td></tr>
+              <tr><td>Product Mix Shift (Electronics to Apparel)</td><td class="mono">62.0% Confidence</td><td><span class="status-tag warning">Secondary Contributor</span></td></tr>
+              <tr><td>Regional Demand Softness</td><td class="mono">41.0% Confidence</td><td><span>Weak Factor</span></td></tr>
+              <tr><td>Competitor Pricing Pressure</td><td class="mono">31.0% Confidence</td><td><span>Rejected</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- View 3: Driver Analysis -->
+      <section class="view-panel" id="v_drivers">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">Revenue Waterfall Decomposition (₹M INR Gap Breakdown)</div>
+            <div style="height: 260px; position: relative;">
+              <canvas id="waterfallChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Hierarchical Contribution Tree</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Drilldown: Cancellation Rate -> Region -> Category -> Supplier</p>
+            <div style="font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.8; background: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);" id="treeFormatted">
+              Cancellation Impact (₹2.4M)<br>
+              ├─ North Region (₹1.1M)<br>
+              │   └─ Electronics (₹0.8M)<br>
+              │       └─ Supplier A (₹0.62M)<br>
+              └─ West Region (₹0.7M)<br>
+                  └─ Electronics (₹0.51M)<br>
+                      └─ Supplier A (₹0.39M)
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- View: Analytics Lab (6 Hero Charts) -->
+      <section class="view-panel" id="v_analytics">
+
+        <!-- Header -->
+        <div class="analytics-lab-header">
+          <div>
+            <div class="analytics-lab-title">
+              <span style="font-size:1.5rem;">🔬</span> Forensic Analytics Workspace
+            </div>
+            <div class="analytics-lab-subtitle">Signal → Deviation → Decomposition → Localisation → Causal Support → Confidence → Decision</div>
+          </div>
+          <div style="display:flex;gap:0.75rem;align-items:center;">
+            <span class="status-tag verified">Investigation ID: INV-2026-0829-017</span>
+            <span class="status-tag verified">88.9% Explained</span>
+          </div>
+        </div>
+
+        <!-- MODULE 1: Actual vs Expected KPI Monitor -->
+        <div class="card">
+          <div class="card-title">
+            <span class="module-badge">1</span>
+            Actual vs Expected KPI Monitor
+          </div>
+          <p style="font-size:0.85rem;color:var(--text-muted);">Actual revenue plotted against a statistically-derived baseline with 95% prediction band. A deviation outside the band is flagged as an anomaly.</p>
+          <div style="height:280px;position:relative;">
+            <canvas id="actualVsExpectedChart"></canvas>
+          </div>
+          <div class="chart-stats-strip">
+            <div class="stat-items">
+              <div class="chart-stat-item">
+                <span class="chart-stat-label">Actual Revenue</span>
+                <span class="chart-stat-value blue">₹91.9M</span>
+              </div>
+              <div class="chart-stat-item">
+                <span class="chart-stat-label">Expected Baseline</span>
+                <span class="chart-stat-value">₹100.0M</span>
+              </div>
+              <div class="chart-stat-item">
+                <span class="chart-stat-label">95% Prediction Band</span>
+                <span class="chart-stat-value">₹97.4M – ₹102.3M</span>
+              </div>
+              <div class="chart-stat-item">
+                <span class="chart-stat-label">Residual</span>
+                <span class="chart-stat-value negative">−₹8.1M</span>
+              </div>
+              <div class="chart-stat-item">
+                <span class="chart-stat-label">Robust Z-Score</span>
+                <span class="chart-stat-value negative">−3.4σ</span>
+              </div>
+              <div class="chart-stat-item">
+                <span class="chart-stat-label">Anomaly Onset</span>
+                <span class="chart-stat-value">Aug 12, 2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 2: Revenue Bridge -->
+        <div class="card">
+          <div class="card-title">
+            <span class="module-badge">2</span>
+            Revenue Bridge — True Price-Volume-Mix Decomposition
+          </div>
+          <p style="font-size:0.85rem;color:var(--text-muted);">Cumulative waterfall reconciling expected ₹100.0M to actual ₹91.9M. Each bar starts from the previous level; bar height = marginal contribution.</p>
+          <div style="height:300px;position:relative;">
+            <canvas id="revenueBridgeChart"></canvas>
+          </div>
+          <div class="attribution-bar-wrap" style="margin-top:0.25rem;">
+            <div class="attribution-label">
+              <span style="color:var(--accent-blue);font-weight:800;">Explained: ₹7.2M — 88.9%</span>
+              <span style="color:var(--accent-amber);font-weight:800;">Unexplained residual: ₹0.9M — 11.1%</span>
+            </div>
+            <div class="attribution-bar-track">
+              <div class="attribution-bar-explained" style="width:88.9%;"></div>
+              <div class="attribution-bar-unexplained" style="width:11.1%;"></div>
+            </div>
+          </div>
+          <div class="residual-box">
+            <div>⚠️ <strong>Unresolved Residual (₹0.9M / 11.1%):</strong> StoryLens knows the boundary of its knowledge.</div>
+            <ul>
+              <li>Competitor pricing data unavailable (No integration)</li>
+              <li>Possible external demand shock not captured in current KPI set</li>
+              <li>Limited product-level promotional calendar access</li>
+            </ul>
+            <div style="margin-top:0.3rem;color:var(--accent-blue);">📌 Next-Best Analysis: Request Competitor Pricing Feed (Expected Info Gain: VERY HIGH)</div>
+          </div>
+        </div>
+
+        <!-- MODULE 3 + 5: Impact Matrix + Heatmap side-by-side -->
+        <div class="grid-2">
+
+          <!-- MODULE 3: Impact × Evidence Matrix -->
+          <div class="card">
+            <div class="card-title">
+              <span class="module-badge">3</span>
+              Impact × Evidence Confidence Matrix
+            </div>
+            <p style="font-size:0.85rem;color:var(--text-muted);">Each hypothesis plotted by business contribution vs evidence confidence. Bubble size = relative impact.</p>
+            <div style="height:280px;position:relative;">
+              <canvas id="impactMatrixChart"></canvas>
+            </div>
+            <div class="quadrant-grid">
+              <div class="quadrant-badge act">⚡ ACT — Supplier A (60.5%, 84%)</div>
+              <div class="quadrant-badge investigate">🔍 INVESTIGATE — Demand Softness</div>
+              <div class="quadrant-badge watch">👁 WATCH — Product Mix</div>
+              <div class="quadrant-badge deprioritize">↓ DEPRIORITIZE — Pricing Pressure</div>
+            </div>
+          </div>
+
+          <!-- MODULE 5: Region × Category Hotspot Heatmap -->
+          <div class="card">
+            <div class="card-title">
+              <span class="module-badge">5</span>
+              Region × Category Hotspot Heatmap
+            </div>
+            <p style="font-size:0.85rem;color:var(--text-muted);">Revenue impact by region and category. Click any cell to see supplier-level breakdown.</p>
+            <div style="overflow-x:auto;">
+              <table class="heatmap-table">
+                <thead>
+                  <tr>
+                    <th class="row-header">Region</th>
+                    <th>Electronics</th>
+                    <th>Apparel</th>
+                    <th>Home &amp; Living</th>
+                    <th>Beauty</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="font-weight:800;color:var(--text-main);background:var(--bg-subtle);border-radius:8px;">North</td>
+                    <td style="background:rgba(239,68,68,0.85);color:white;" onclick="heatmapClick('north','elec')" title="Click to expand">−₹1.42M</td>
+                    <td style="background:rgba(239,68,68,0.25);color:#991b1b;" onclick="heatmapClick('north','app')" title="Click to expand">−₹0.20M</td>
+                    <td style="background:rgba(239,68,68,0.18);color:#991b1b;" onclick="heatmapClick('north','home')" title="Click to expand">−₹0.10M</td>
+                    <td style="background:rgba(239,68,68,0.12);color:#991b1b;" onclick="heatmapClick('north','beauty')" title="Click to expand">−₹0.05M</td>
+                  </tr>
+                  <tr>
+                    <td id="hm-exp-north-elec" class="heatmap-expansion" colspan="5">
+                      <strong>North × Electronics — Supplier breakdown:</strong>
+                      <table><tr><td>Supplier A</td><td style="color:#ef4444;font-weight:800;">−₹1.01M</td></tr><tr><td>Supplier B</td><td style="color:#f59e0b;">−₹0.27M</td></tr><tr><td>Supplier C</td><td style="color:#64748b;">−₹0.14M</td></tr></table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight:800;color:var(--text-main);background:var(--bg-subtle);border-radius:8px;">West</td>
+                    <td style="background:rgba(239,68,68,0.65);color:white;" onclick="heatmapClick('west','elec')" title="Click to expand">−₹0.91M</td>
+                    <td style="background:rgba(239,68,68,0.15);color:#991b1b;" onclick="heatmapClick('west','app')" title="Click to expand">−₹0.10M</td>
+                    <td style="background:rgba(239,68,68,0.12);color:#991b1b;" onclick="heatmapClick('west','home')" title="Click to expand">−₹0.08M</td>
+                    <td style="background:rgba(16,185,129,0.2);color:#047857;" onclick="heatmapClick('west','beauty')" title="Click to expand">+₹0.02M</td>
+                  </tr>
+                  <tr>
+                    <td id="hm-exp-west-elec" class="heatmap-expansion" colspan="5">
+                      <strong>West × Electronics — Supplier breakdown:</strong>
+                      <table><tr><td>Supplier A</td><td style="color:#ef4444;font-weight:800;">−₹0.67M</td></tr><tr><td>Supplier B</td><td style="color:#f59e0b;">−₹0.16M</td></tr><tr><td>Supplier C</td><td style="color:#64748b;">−₹0.08M</td></tr></table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight:800;color:var(--text-main);background:var(--bg-subtle);border-radius:8px;">South</td>
+                    <td style="background:rgba(239,68,68,0.2);color:#991b1b;">−₹0.14M</td>
+                    <td style="background:rgba(16,185,129,0.15);color:#047857;">+₹0.03M</td>
+                    <td style="background:rgba(239,68,68,0.1);color:#991b1b;">−₹0.04M</td>
+                    <td style="background:rgba(16,185,129,0.12);color:#047857;">+₹0.01M</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight:800;color:var(--text-main);background:var(--bg-subtle);border-radius:8px;">East</td>
+                    <td style="background:rgba(239,68,68,0.18);color:#991b1b;">−₹0.12M</td>
+                    <td style="background:rgba(239,68,68,0.08);color:#991b1b;">−₹0.01M</td>
+                    <td style="background:rgba(16,185,129,0.1);color:#047857;">+₹0.02M</td>
+                    <td style="background:var(--bg-subtle);color:var(--text-muted);">₹0.00M</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="font-size:0.78rem;color:var(--text-muted);font-weight:600;margin-top:0.5rem;">💡 Insight: 77.3% of impact concentrated in North &amp; West Electronics. Click any cell to see supplier breakdown.</div>
+          </div>
+        </div>
+
+        <!-- MODULE 4: DiD Causal Validation -->
+        <div class="card">
+          <div class="card-title">
+            <span class="module-badge">4</span>
+            Causal Support Verification — Difference-in-Differences
+          </div>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.25rem;">Treatment = Supplier A-dependent SKUs. Control = matched Supplier B/C SKUs. The post-event divergence supports a causal interpretation <em>under the parallel-trends assumption</em>.</p>
+          <div class="grid-2" style="align-items:start;">
+            <div style="height:280px;position:relative;">
+              <canvas id="didChart"></canvas>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0.75rem;">
+              <div class="did-stats-grid">
+                <div class="did-stat-box">
+                  <span class="did-stat-label">Treatment Group</span>
+                  <span class="did-stat-value">Supplier A SKUs</span>
+                </div>
+                <div class="did-stat-box">
+                  <span class="did-stat-label">Control Group</span>
+                  <span class="did-stat-value">Matched B/C SKUs</span>
+                </div>
+                <div class="did-stat-box">
+                  <span class="did-stat-label">Pre-event Difference</span>
+                  <span class="did-stat-value">+1.0 pp</span>
+                </div>
+                <div class="did-stat-box">
+                  <span class="did-stat-label">Post-event Difference</span>
+                  <span class="did-stat-value neg">−5.0 pp</span>
+                </div>
+                <div class="did-stat-box highlight">
+                  <span class="did-stat-label">DiD Effect (Causal)</span>
+                  <span class="did-stat-value neg" style="font-size:1.3rem;">−6.0 pp</span>
+                </div>
+                <div class="did-stat-box">
+                  <span class="did-stat-label">95% Conf. Interval</span>
+                  <span class="did-stat-value neg">[−8.1pp, −3.9pp]</span>
+                </div>
+                <div class="did-stat-box">
+                  <span class="did-stat-label">p-value</span>
+                  <span class="did-stat-value pos">&lt; 0.01</span>
+                </div>
+                <div class="did-stat-box">
+                  <span class="did-stat-label">Match Quality</span>
+                  <span class="did-stat-value pos">91%</span>
+                </div>
+              </div>
+              <div class="parallel-trends-box pass">
+                ✅ <span>Parallel Trends Check: <strong>PASS</strong></span>
+                <span style="font-size:0.78rem;color:#166534;">Pre-trend similarity score 0.93 — DiD interpretation supported</span>
+                <span class="parallel-trends-score">0.93</span>
+              </div>
+              <div style="font-size:0.78rem;color:var(--text-muted);font-weight:600;background:var(--bg-subtle);padding:0.75rem;border-radius:var(--radius-md);">ℹ️ DiD supports a causal interpretation under the parallel-trends assumption — not unconditional causal proof. StoryLens reports this transparently.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 6: Customer Delay × Retention Cohort -->
+        <div class="card">
+          <div class="card-title">
+            <span class="module-badge">6</span>
+            Customer Delay × Retention Cohort Analysis
+          </div>
+          <p style="font-size:0.85rem;color:var(--text-muted);">Customers segmented by delivery delay experienced. Proves the operations → customer behaviour → revenue chain.</p>
+          <div style="height:260px;position:relative;">
+            <canvas id="cohortChart"></canvas>
+          </div>
+          <div class="cohort-caption">
+            📉 Each additional day of delivery delay corresponds to approximately <strong>−3.6 pp lower repeat purchase rate</strong>. Customers experiencing &gt;5 day delays show 14.6pp lower retention than unaffected cohort.
+          </div>
+          <table class="console-table" style="margin-top:0.5rem;">
+            <thead>
+              <tr><th>Delay Cohort</th><th>Customers Affected</th><th>Repeat Purchase Rate</th><th>Δ vs Baseline</th><th>Est. Revenue Impact</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>No Delay</td><td class="mono">4,200</td><td class="mono">31.4%</td><td class="mono">—</td><td class="mono">Baseline</td></tr>
+              <tr><td>1–2 Day Delay</td><td class="mono">2,840</td><td class="mono">28.9%</td><td class="mono" style="color:#f59e0b;">−2.5 pp</td><td class="mono">−₹0.4M</td></tr>
+              <tr><td>3–5 Day Delay</td><td class="mono">1,960</td><td class="mono">23.1%</td><td class="mono" style="color:#ef4444;">−8.3 pp</td><td class="mono">−₹1.1M</td></tr>
+              <tr><td>&gt;5 Day Delay</td><td class="mono">820</td><td class="mono">16.8%</td><td class="mono" style="color:#ef4444;">−14.6 pp</td><td class="mono">−₹0.8M</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </section>
+
+      <!-- View 4: Decision Lab (What-If Simulator & Closed Loop Outcome) -->
+      <section class="view-panel" id="v_decisions">
+        <div class="card">
+          <div class="card-title">Response Simulation — Reallocate Supplier A Volume</div>
+
+          <div class="simulator-container">
+            <div class="slider-group">
+              <div class="slider-header">
+                <span>Reallocate Outbound Volume</span>
+                <span id="sliderValLabel" class="slider-val">22%</span>
+              </div>
+              <input type="range" id="volSlider" min="0" max="50" value="22" step="1">
+
+              <div style="display: flex; gap: 1.5rem; font-size: 0.85rem; font-weight: 600; margin-top: 0.4rem;">
+                <div>Supplier B Capacity: <strong>28%</strong></div>
+                <div>Supplier C Capacity: <strong>11%</strong></div>
+                <div>Reallocation Limit: <strong>35%</strong></div>
+              </div>
+
+              <div id="simConstraintAlert" style="display: none;" class="warning-banner">
+                ⚠️ Supplier B capacity limit (32.0%) exceeded! Additional volume requires secondary procurement authorization.
+              </div>
+            </div>
+
+            <div class="sim-output-grid">
+              <div class="sim-stat-box">
+                <span class="stat-label">Projected Delivery SLA Breach</span>
+                <span class="stat-val" id="projDelay">9.4%</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Baseline: 18.2%</span>
+              </div>
+              <div class="sim-stat-box">
+                <span class="stat-label">Projected Cancellation Rate</span>
+                <span class="stat-val" id="projCancel">7.1%</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Baseline: 14.1%</span>
+              </div>
+              <div class="sim-stat-box">
+                <span class="stat-label">Expected 4-Week Revenue Recovery</span>
+                <span class="stat-val" id="projRecovery">₹3.0M</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Range: ₹2.6M – ₹3.4M</span>
+              </div>
+            </div>
+
+            <div style="background: var(--bg-surface); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-card); font-size: 0.85rem;">
+              <strong>Monte-Carlo 500 Trial Robustness:</strong> <strong style="color: #047857;">87% Scenario Success Rate</strong> (P10: ₹1.8M, P90: ₹3.6M, Downside Risk: ₹0.4M)
+            </div>
+          </div>
+        </div>
+
+        <!-- Closed-Loop Outcome Tracker (+28 Days) -->
+        <div class="card" style="border-left: 4px solid #047857;">
+          <div class="card-title">🔁 Closed-Loop Recommendation Outcome (+28 Days Observed)</div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Evaluates predicted performance against actual observed enterprise outcome after 4 weeks of execution:</p>
+
+          <table class="console-table">
+            <thead>
+              <tr>
+                <th>Performance Metric</th>
+                <th>Predicted Target</th>
+                <th>Actual Observed (+28d)</th>
+                <th>Variance / Error</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Outbound Delivery Delay</td><td class="mono">8.3%</td><td class="mono">9.1%</td><td class="mono">+0.8 pp</td><td><span class="status-tag verified">Within Range</span></td></tr>
+              <tr><td>Order Cancellation Rate</td><td class="mono">7.1%</td><td class="mono">7.8%</td><td class="mono">+0.7 pp</td><td><span class="status-tag verified">Within Range</span></td></tr>
+              <tr><td>4-Week Revenue Recovery</td><td class="mono">₹3.03M</td><td class="mono">₹2.72M</td><td class="mono" style="color: #047857;">-10.2% Error</td><td><span class="status-tag verified">SUCCESSFUL</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Alternatives Evaluated Table -->
+        <div class="card">
+          <div class="card-title">Alternatives Evaluated & Decision Optimization</div>
+          <table class="console-table">
+            <thead>
+              <tr>
+                <th>Candidate Action</th>
+                <th>Expected Recovery</th>
+                <th>Risk Profile</th>
+                <th>Confidence</th>
+                <th>Decision Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Shift 22% Volume to Supplier B</td><td class="mono">₹3.0M</td><td>Medium</td><td class="mono">78%</td><td><span class="status-tag verified">RECOMMENDED</span></td></tr>
+              <tr><td>Expedite Air Freight Shipping</td><td class="mono">₹2.1M</td><td>High Cost</td><td class="mono">86%</td><td><span>Alternative</span></td></tr>
+              <tr><td>Increase Local Warehouse Buffer</td><td class="mono">₹1.3M</td><td>Low</td><td class="mono">71%</td><td><span>Long-term</span></td></tr>
+              <tr><td>Shift 40% Volume to Supplier B</td><td class="mono">₹3.4M</td><td style="color: var(--accent-rose);">Capacity Violation</td><td class="mono">—</td><td><span class="status-tag warning">REJECTED</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- View 5: Evidence Ledger (Table + Right Drawer) -->
+      <section class="view-panel" id="v_evidence">
+        <div class="card">
+          <div class="card-title">Traceable Evidence Ledger</div>
+
+          <table class="console-table">
+            <thead>
+              <tr>
+                <th>Evidence ID</th>
+                <th>Finding / Claim</th>
+                <th>Source</th>
+                <th>Method</th>
+                <th>Freshness</th>
+                <th>Quality</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr onclick="openDrawer('EV-3941')">
+                <td class="mono">EV-3941</td>
+                <td>Revenue −8.1% (₹8.1M gap)</td>
+                <td>SAP Sales</td>
+                <td>PVM Decomposition</td>
+                <td class="mono">7m</td>
+                <td class="mono">99.8%</td>
+                <td><button class="btn-primary" style="padding: 0.3rem 0.7rem; font-size: 0.75rem;">Review Provenance &rarr;</button></td>
+              </tr>
+              <tr onclick="openDrawer('EV-3942')">
+                <td class="mono">EV-3942</td>
+                <td>Supplier A Fill rate −21.4%</td>
+                <td>Manhattan WMS</td>
+                <td>Cohort Analysis</td>
+                <td class="mono">53m</td>
+                <td class="mono">97.1%</td>
+                <td><button class="btn-primary" style="padding: 0.3rem 0.7rem; font-size: 0.75rem;">Review Provenance &rarr;</button></td>
+              </tr>
+              <tr onclick="openDrawer('EV-3943')">
+                <td class="mono">EV-3943</td>
+                <td>Complaints +24%</td>
+                <td>Zendesk CRM</td>
+                <td>Rate Change</td>
+                <td class="mono">2m</td>
+                <td class="mono">94.6%</td>
+                <td><button class="btn-primary" style="padding: 0.3rem 0.7rem; font-size: 0.75rem;">Review Provenance &rarr;</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- View 6: Governance & Audit -->
+      <section class="view-panel" id="v_governance">
+        
+        <!-- Trusted Analytics Registry -->
+        <div class="card" style="border-left: 4px solid var(--accent-blue);">
+          <div class="card-title">📜 Trusted Analytics Registry & Semantic Drift</div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Signed, CFO-approved SQL queries and version-controlled KPI contracts:</p>
+          
+          <table class="console-table">
+            <thead>
+              <tr>
+                <th>Metric ID</th>
+                <th>Metric Name</th>
+                <th>Owner</th>
+                <th>Verified By</th>
+                <th>Version</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="mono">net_revenue</td><td>Net Revenue</td><td>Finance Analytics</td><td>CFO Data Office</td><td class="mono">v3.2</td><td><span class="status-tag verified">TRUSTED</span></td></tr>
+              <tr><td class="mono">on_time_delivery</td><td>On-Time Delivery Rate</td><td>Logistics Ops</td><td>VP Supply Chain</td><td class="mono">v2.1</td><td><span class="status-tag verified">TRUSTED</span></td></tr>
+            </tbody>
+          </table>
+
+          <div style="background: #fffbeb; border: 1px solid #f59e0b; padding: 0.85rem; border-radius: var(--radius-md); font-size: 0.85rem; color: #b45309; margin-top: 0.5rem;">
+            ⚠️ <strong>Semantic Drift Alert:</strong> Net Revenue contract updated from v3.1 to v3.2 (deducting promotional credits). Historical comparability impact: -1.7% variance on Apr-Aug 2026 baseline.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Ground-Truth Benchmark Results (42 Synthetic Seeded Incidents)</div>
+          <table class="console-table">
+            <thead>
+              <tr>
+                <th>Evaluation Metric</th>
+                <th>Measured Result</th>
+                <th>Benchmark Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Top-1 Driver Accuracy</td><td class="mono">85.7%</td><td><span class="status-tag verified">Measured Benchmark</span></td></tr>
+              <tr><td>Top-3 Driver Recall</td><td class="mono">95.2%</td><td><span class="status-tag verified">Measured Benchmark</span></td></tr>
+              <tr><td>Abstention Precision</td><td class="mono">88.9%</td><td><span class="status-tag verified">Measured Benchmark</span></td></tr>
+              <tr><td>Numeric Claim Fidelity</td><td class="mono">100.0%</td><td><span class="status-tag verified">Verified Zero Hallucinations</span></td></tr>
+              <tr><td>Data Anomaly Discriminator Accuracy</td><td class="mono">100.0%</td><td><span class="status-tag verified">Pipeline Anomaly Gate</span></td></tr>
+              <tr><td>Median Latency</td><td class="mono">153 ms</td><td><span class="status-tag verified">Validated</span></td></tr>
+              <tr><td>Est. Cost / Insight</td><td class="mono">$0.0021</td><td><span class="status-tag verified">Validated</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Pre-Query Role Security Audit Log</div>
+          <div style="font-family: var(--font-mono); font-size: 0.8rem; background: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-card);">
+            [SEC_AUDIT 16:55:01] Policy Engine executed for role 'executive'. Entitlement: Full access.<br>
+            [SEC_AUDIT 16:55:01] 12,570 rows processed across SAP, WMS, and Zendesk.<br>
+            [SEC_AUDIT 16:55:01] Verified zero PII exposure. 100% claims bound to Evidence Package.
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer Ribbon -->
+    <footer class="footer-ribbon">
+      <div>Last investigation 2m ago · 3 sources reconciled · Verified</div>
+      <div style="font-family: var(--font-mono);">StoryLens Engine v2.0</div>
+    </footer>
+
+  </div>
+
+  <!-- Executive Decision Brief Modal -->
+  <div class="drawer-overlay" id="briefOverlay" onclick="closeBriefModal()"></div>
+  <div class="drawer-panel" id="briefPanel" style="width: 600px; right: -620px;">
+    <div class="drawer-header">
+      <div class="drawer-title">📄 C-Suite Executive Decision Brief</div>
+      <button class="close-drawer-btn" onclick="closeBriefModal()">&times;</button>
+    </div>
+
+    <div style="border-left: 3px solid var(--accent-purple); padding-left: 0.85rem;">
+      <strong style="color: var(--accent-purple); font-size: 0.8rem;">INCIDENT REF: INV-2026-0829-017</strong>
+      <h3 style="margin-top: 0.2rem;">Situation: Net Revenue is ₹8.1M below expected performance (-8.1%)</h3>
+    </div>
+
+    <div style="font-size: 0.85rem; line-height: 1.6;">
+      <strong>Leading Explanation:</strong> Supplier A fulfillment deterioration (Evidence Confidence: <strong>84% High</strong>, Explained Impact: <strong>₹7.2M</strong>).
+    </div>
+
+    <div style="background: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md); font-size: 0.85rem;">
+      <strong>Supporting Evidence Package:</strong>
+      <ul style="margin-left: 1.2rem; margin-top: 0.4rem; display: flex; flex-direction: column; gap: 0.3rem;">
+        <li>EV-3941: Net Revenue down 8.1% ($8.1M gap)</li>
+        <li>EV-3942: Supplier A fill rate down 21.4%, delivery delays up 18.2%</li>
+        <li>EV-3943: Customer SLA complaint tickets up 24.0%</li>
+        <li>DID Test: Exposed SKUs show -6.0 pp retention drop vs control (p < 0.01)</li>
+      </ul>
+    </div>
+
+    <div style="border: 1px solid var(--border-card); padding: 1rem; border-radius: var(--radius-md);">
+      <div style="font-weight: 800; color: var(--accent-blue);">Recommended Intervention & ROI</div>
+      <div style="font-size: 1.1rem; font-weight: 900; margin-top: 0.2rem;">Shift 22% Supplier A outbound volume to Supplier B</div>
+      <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem;">Expected 4-Week Revenue Recovery: <strong>₹2.6M – ₹3.4M</strong> (Central: ₹3.0M)</div>
+      <div style="font-size: 0.85rem; color: var(--accent-purple); font-weight: 700; margin-top: 0.2rem;">Decision Robustness Score: 87% (500 Monte-Carlo Scenarios)</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.85rem;">
+      <div>Assigned Owner: <strong>VP Supply Chain</strong></div>
+      <div>Decision Deadline: <strong style="color: var(--accent-rose);">Today 18:30 IST</strong></div>
+      <div>Autonomy Level: <strong>Level 3 (Human Approval)</strong></div>
+      <div>Operational Risk: <strong>Medium</strong></div>
+    </div>
+
+    <div style="display: flex; gap: 0.75rem; margin-top: 0.5rem;">
+      <button class="btn-primary" style="flex: 1; justify-content: center;" onclick="alert('Decision Intervention Approved! Executing volume reallocation.')">
+        ✓ Approve Action
+      </button>
+      <button class="btn-secondary" style="flex: 1; justify-content: center;" onclick="alert('Action modify mode selected.')">
+        ⚙ Modify
+      </button>
+      <button class="btn-secondary" style="color: var(--accent-rose); border-color: rgba(239, 68, 68, 0.4);" onclick="alert('Intervention Rejected. Reason required.')">
+        ✕ Reject
+      </button>
+    </div>
+  </div>
+
+  <!-- Right-Side Evidence Drawer -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <div class="drawer-panel" id="drawerPanel">
+    <div class="drawer-header">
+      <div class="drawer-title" id="dTitle">EV-3942</div>
+      <button class="close-drawer-btn" onclick="closeDrawer()">&times;</button>
+    </div>
+
+    <div>
+      <strong>Claim / Finding:</strong>
+      <p id="dClaim" style="margin-top: 0.3rem; color: var(--text-main);">Supplier A fill rate fell 21.4% and outbound delivery delays increased 18.2%.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.85rem;">
+      <div>Source Table: <strong id="dSource">Manhattan WMS</strong></div>
+      <div>Freshness: <strong id="dFresh">53 min</strong></div>
+      <div>Rows Analysed: <strong id="dRows">12,570</strong></div>
+      <div>Quality Score: <strong id="dQuality">97.1%</strong></div>
+    </div>
+
+    <div>
+      <strong>SQL Citation:</strong>
+      <pre style="background: var(--bg-subtle); padding: 0.75rem; border-radius: var(--radius-md); font-family: var(--font-mono); font-size: 0.75rem; margin-top: 0.4rem; overflow-x: auto;" id="dSql">SELECT supplier_id, AVG(delay_days) FROM shipments GROUP BY supplier_id</pre>
+    </div>
+
+    <div>
+      <strong>Lineage Path:</strong>
+      <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-blue); font-weight: 700; margin-top: 0.3rem;">shipments → supplier_daily → on_time_delivery → net_revenue</div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

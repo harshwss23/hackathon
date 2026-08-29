@@ -1,0 +1,30 @@
+{
+  "roles": {
+    "executive": {
+      "name": "Executive C-Suite",
+      "allowed_metrics": ["net_revenue", "on_time_delivery", "cancellation_rate", "repeat_purchase_rate", "complaint_rate"],
+      "allowed_dimensions": ["region", "category", "supplier", "channel", "cohort"],
+      "data_masking": [],
+      "narrative_focus": "strategic_financial_ebitda",
+      "max_query_rows": 100000
+    },
+
+    "operations": {
+      "name": "Operations Lead",
+      "allowed_metrics": ["on_time_delivery", "cancellation_rate", "complaint_rate"],
+      "allowed_dimensions": ["region", "category", "supplier", "warehouse"],
+      "data_masking": ["net_revenue", "customer_name", "price", "discount", "margin"],
+      "narrative_focus": "tactical_sla_warehouse",
+      "max_query_rows": 50000
+    },
+
+    "analyst": {
+      "name": "BI Analyst / Auditor",
+      "allowed_metrics": ["net_revenue", "on_time_delivery", "cancellation_rate", "repeat_purchase_rate", "complaint_rate"],
+      "allowed_dimensions": ["region", "category", "supplier", "channel", "warehouse", "cohort"],
+      "data_masking": ["customer_name"],
+      "narrative_focus": "technical_explainability_sql",
+      "max_query_rows": 200000
+    }
+  }
+}

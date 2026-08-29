@@ -1,0 +1,133 @@
+{
+  "kpis": {
+    "net_revenue": {
+      "id": "net_revenue",
+      "name": "Net Revenue",
+      "description": "Recognized enterprise order value net of discounts, refunds, and cancellations.",
+      "calculation": "SUM(price * quantity - discount - refund)",
+      "grain": "hourly",
+      "currency": "INR",
+      "calendar": "fiscal",
+      "dimensions": ["region", "category", "supplier", "channel"],
+      "candidate_drivers": ["order_volume", "price", "product_mix", "cancellation_rate", "repeat_purchase"],
+      "materiality": {
+        "relative_change": 0.05,
+        "absolute_impact": 5000000
+      },
+      "baseline": {
+        "method": "seasonal_rolling_baseline",
+        "window_days": 90
+      },
+      "lineage": ["sales.orders", "sales.refunds"],
+      "access": {
+        "executive": "full",
+        "operations": "aggregate_only"
+      },
+      "owner": "Finance"
+    },
+
+    "on_time_delivery": {
+      "id": "on_time_delivery",
+      "name": "On-Time Delivery Rate",
+      "description": "Percentage of shipments delivered on or before promised SLA date.",
+      "calculation": "(COUNT(CASE WHEN delay_days <= 0 THEN 1 END) / COUNT(*)) * 100",
+      "grain": "4_hours",
+      "currency": "PERCENT",
+      "calendar": "standard",
+      "dimensions": ["warehouse", "supplier", "region"],
+      "candidate_drivers": ["supplier_fill_rate", "warehouse_backlog", "logistics_latency"],
+      "materiality": {
+        "relative_change": 0.08,
+        "absolute_impact": 0.05
+      },
+      "baseline": {
+        "method": "rolling_median",
+        "window_days": 30
+      },
+      "lineage": ["logistics.shipments"],
+      "access": {
+        "executive": "full",
+        "operations": "full"
+      },
+      "owner": "Logistics & Supply Chain"
+    },
+
+    "cancellation_rate": {
+      "id": "cancellation_rate",
+      "name": "Order Cancellation Rate",
+      "description": "Ratio of buyer-cancelled orders due to fulfillment delays or stockouts.",
+      "calculation": "(COUNT(CASE WHEN status = 'cancelled' THEN 1 END) / COUNT(*)) * 100",
+      "grain": "hourly",
+      "currency": "PERCENT",
+      "calendar": "standard",
+      "dimensions": ["region", "category", "supplier"],
+      "candidate_drivers": ["delivery_delay", "stockout_event", "price_spike"],
+      "materiality": {
+        "relative_change": 0.10,
+        "absolute_impact": 0.03
+      },
+      "baseline": {
+        "method": "rolling_mean",
+        "window_days": 30
+      },
+      "lineage": ["sales.orders"],
+      "access": {
+        "executive": "full",
+        "operations": "full"
+      },
+      "owner": "Sales Operations"
+    },
+
+    "repeat_purchase_rate": {
+      "id": "repeat_purchase_rate",
+      "name": "Repeat Purchase Rate",
+      "description": "Percentage of existing cohort buyers making repeat purchases within 30 days.",
+      "calculation": "(COUNT(DISTINCT repeat_buyers) / COUNT(DISTINCT total_buyers)) * 100",
+      "grain": "daily",
+      "currency": "PERCENT",
+      "calendar": "standard",
+      "dimensions": ["cohort", "region", "category"],
+      "candidate_drivers": ["complaint_rate", "cancellation_rate", "delivery_sla_breach"],
+      "materiality": {
+        "relative_change": 0.07,
+        "absolute_impact": 0.04
+      },
+      "baseline": {
+        "method": "cohort_rolling_baseline",
+        "window_days": 60
+      },
+      "lineage": ["sales.orders", "customer.profiles"],
+      "access": {
+        "executive": "full",
+        "operations": "aggregate_only"
+      },
+      "owner": "Customer Retention"
+    },
+
+    "complaint_rate": {
+      "id": "complaint_rate",
+      "name": "Customer Complaint Rate",
+      "description": "Number of SLA breach support tickets logged per 1,000 completed orders.",
+      "calculation": "(COUNT(ticket_id) / SUM(orders)) * 1000",
+      "grain": "realtime",
+      "currency": "RATE_PER_1K",
+      "calendar": "standard",
+      "dimensions": ["issue_type", "region", "product"],
+      "candidate_drivers": ["delivery_delay", "product_defect", "billing_error"],
+      "materiality": {
+        "relative_change": 0.15,
+        "absolute_impact": 10
+      },
+      "baseline": {
+        "method": "exponential_smoothing",
+        "window_days": 14
+      },
+      "lineage": ["support.tickets"],
+      "access": {
+        "executive": "full",
+        "operations": "full"
+      },
+      "owner": "Customer Support"
+    }
+  }
+}

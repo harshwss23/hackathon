@@ -1,0 +1,64 @@
+{
+  "playbooks": [
+    {
+      "driver_id": "supplier_fill_rate_drop",
+      "driver_name": "Supplier Fill Rate Bottleneck",
+      "actions": [
+        {
+          "id": "ACT_REALLOCATE_VOL",
+          "name": "Reallocate Supplier Volume",
+          "owner": "VP Supply Chain / Procurement Lead",
+          "controllable_lever": "supplier_allocation_pct",
+          "slider_range": [0, 50],
+          "constraints": [
+            { "type": "max_capacity", "target": "Supplier B", "limit_pct": 32 },
+            { "type": "min_contract", "target": "Supplier A", "limit_pct": 10 }
+          ],
+          "simulated_impact": {
+            "delay_reduction_pct_per_vol": 0.48,
+            "cancellation_reduction_pct_per_vol": 0.32,
+            "revenue_recovery_inr_per_vol": 540000
+          },
+          "monitoring_plan": ["on_time_delivery", "order_cancellation_rate", "net_revenue"]
+        },
+        {
+          "id": "ACT_AIR_FREIGHT",
+          "name": "Authorize Expedited Air Freight",
+          "owner": "Logistics Operations Lead",
+          "controllable_lever": "air_freight_budget",
+          "slider_range": [0, 1000000],
+          "constraints": [
+            { "type": "max_budget", "limit_inr": 1000000 }
+          ],
+          "simulated_impact": {
+            "delay_reduction_pct_per_vol": 0.65,
+            "cancellation_reduction_pct_per_vol": 0.50,
+            "revenue_recovery_inr_per_vol": 780000
+          },
+          "monitoring_plan": ["on_time_delivery", "warehouse_backlog"]
+        }
+      ]
+    },
+    {
+      "driver_id": "product_defect_batch",
+      "driver_name": "Product Quality Defect Influx",
+      "actions": [
+        {
+          "id": "ACT_PAUSE_SKU",
+          "name": "Quarantine Batch SKU Stock",
+          "owner": "Quality Control Director",
+          "controllable_lever": "sku_quarantine_flag",
+          "slider_range": [0, 1],
+          "constraints": [
+            { "type": "inventory_buffer", "min_units": 500 }
+          ],
+          "simulated_impact": {
+            "complaint_reduction_pct": 82.0,
+            "revenue_recovery_inr": 2100000
+          },
+          "monitoring_plan": ["complaint_rate", "return_rate"]
+        }
+      ]
+    }
+  ]
+}

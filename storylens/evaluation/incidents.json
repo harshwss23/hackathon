@@ -1,0 +1,14 @@
+{
+  "incidents": [
+    { "id": "INC-001", "name": "Supplier A Component Disruption", "true_driver": "supplier_fill_rate_drop", "is_ambiguous": false, "expected_confidence": 84.1 },
+    { "id": "INC-002", "name": "Contradictory Marketing vs Return Logs", "true_driver": "ambiguous", "is_ambiguous": true, "expected_confidence": 41.0 },
+    { "id": "INC-003", "name": "New Product AI Copilot Launch", "true_driver": "cold_start_onboarding", "is_ambiguous": false, "expected_confidence": 71.0 },
+    { "id": "INC-004", "name": "Midwest Warehouse Strike", "true_driver": "warehouse_backlog", "is_ambiguous": false, "expected_confidence": 88.0 },
+    { "id": "INC-005", "name": "Ad Spend Bidding Shift", "true_driver": "cac_spike", "is_ambiguous": false, "expected_confidence": 88.0 },
+    { "id": "INC-006", "name": "Mobile v4.2 Crash Bug", "true_driver": "app_crash", "is_ambiguous": false, "expected_confidence": 91.0 },
+    { "id": "INC-007", "name": "Conflicting Region Stock Reports", "true_driver": "ambiguous", "is_ambiguous": true, "expected_confidence": 44.0 },
+    { "id": "INC-008", "name": "Supplier C Raw Material Shortage", "true_driver": "supplier_fill_rate_drop", "is_ambiguous": false, "expected_confidence": 82.0 },
+    { "id": "INC-009", "name": "Pricing Increase Volatility", "true_driver": "price_spike", "is_ambiguous": false, "expected_confidence": 79.0 },
+    { "id": "INC-010", "name": "Stale Logistics Telemetry", "true_driver": "ambiguous", "is_ambiguous": true, "expected_confidence": 46.0 }
+  ]
+}
