@@ -106,11 +106,41 @@ Tested against a synthetic ground-truth benchmark suite of **42 seeded enterpris
 - Python 3.9+
 - Standard Library (`sqlite3`, `json`, `http.server`)
 
+### Enable Live Groq AI
+
+StoryLens keeps the LLM behind the Python server so the API key is never sent to the browser. Copy the example environment file and add a Groq key:
+
+```bash
+cp .env.example .env
+# Edit .env and set GROQ_API_KEY
+```
+
+The default production model is `openai/gpt-oss-20b`. You can override it with `GROQ_MODEL` in `.env`.
+
+Live AI capabilities:
+
+- Evidence-bound investigation narratives with validated evidence IDs
+- Interactive decision copilot for executive, operations, and analyst personas
+- Adversarial conclusion challenges and next-best-evidence suggestions
+- Board-ready executive briefs generated from governed analytics
+- Visible provider, model, latency, and token-usage metadata
+- Deterministic fallback, abstention, and data-health safety gates
+
 ### One-Click Launch
 ```bash
 python3 start.py
 ```
 Open **`http://localhost:8080`** in your browser.
+
+### Run with Docker
+
+```bash
+docker compose up --build
+```
+
+Open **`http://localhost:8080`**. The image runs as a non-root user, includes a container health check, and reads the Groq credential at runtime from `.env` rather than embedding it in the image.
+
+For an Amazon EC2 walkthrough, see [`DEPLOY_EC2.md`](DEPLOY_EC2.md).
 
 ### Run Evaluation Suite
 ```bash

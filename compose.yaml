@@ -1,0 +1,11 @@
+services:
+  storylens:
+    build: .
+    image: storylens-ai:2.1
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    init: true
+

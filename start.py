@@ -8,7 +8,7 @@ import os
 import sys
 import json
 import urllib.parse
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
@@ -39,25 +39,57 @@ class StoryLensHTTPRequestHandler(SimpleHTTPRequestHandler):
             self._send_json(res)
             return
 
+        if path == "/api/health":
+            self._send_json({
+                "status": "healthy",
+                "service": "storylens-ai",
+                "version": "2.1",
+            })
+            return
+
         return super().do_GET()
 
     def do_POST(self):
         parsed = urllib.parse.urlparse(self.path)
-        if parsed.path == "/api/simulate":
-            content_len = int(self.headers.get('Content-Length', 0))
-            post_body = self.rfile.read(content_len)
-            data = json.loads(post_body) if post_body else {}
-            pct = data.get("reallocate_pct", 30.0)
-            res = handle_simulate(pct)
-            self._send_json(res)
+        try:
+            data = self._read_json_body()
+            if parsed.path == "/api/simulate":
+                pct = data.get("reallocate_pct", 30.0)
+                self._send_json(handle_simulate(pct))
+                return
+
+        except ValueError as exc:
+            self._send_json({"error": str(exc)}, status=400)
+            return
+        except Exception as exc:
+            self._send_json({"error": "Request failed", "detail": str(exc)}, status=500)
             return
 
-        self.send_error(404, "Endpoint Not Found")
+        self._send_json({"error": "Endpoint not found"}, status=404)
 
-    def _send_json(self, data):
-        self.send_response(200)
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.end_headers()
+
+    def _read_json_body(self):
+        content_len = int(self.headers.get("Content-Length", 0))
+        if content_len > 32768:
+            raise ValueError("Request body is too large")
+        if content_len == 0:
+            return {}
+        try:
+            return json.loads(self.rfile.read(content_len).decode("utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+            raise ValueError("Request body must be valid JSON") from exc
+
+    def _send_json(self, data, status=200):
+        self.send_response(status)
         self.send_header("Content-Type", "application/json")
         self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Cache-Control", "no-store")
         self.end_headers()
         self.wfile.write(json.dumps(data).encode("utf-8"))
 
@@ -70,7 +102,7 @@ def main():
     print(f" Frontend Workspace: {FRONTEND_DIR}")
     print(f"=========================================================")
 
-    server = HTTPServer(("0.0.0.0", PORT), StoryLensHTTPRequestHandler)
+    server = ThreadingHTTPServer(("0.0.0.0", PORT), StoryLensHTTPRequestHandler)
     try:
         server.serve_forever()
     except KeyboardInterrupt:

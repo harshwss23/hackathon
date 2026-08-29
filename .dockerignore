@@ -1,0 +1,13 @@
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+.DS_Store
+__pycache__
+*.py[cod]
+*.pdf
+*.pptx
+DEMO_VIDEO_SCRIPT.md
+PRESENTATION_ROUND2_GUIDE.md
+
